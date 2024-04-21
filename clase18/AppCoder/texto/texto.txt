@@ -1,0 +1,123 @@
+contenido de cursos : 
+( ESTO NO ME SALE SI O SI DEBO COPIAR EL HATML DE PADRE Y AGREGAR EN BLOQUE ,)
+{% extends "padre.html" %} {% load static %} {% block contenido %} {% for n in
+cursos %}-->
+<p>{{n.nombre}}</p>
+<p>{{n.camada}}</p>
+
+{% endfor %} {% endblock contenido %}
+
+
+----------------------------------------------------------------------
+OTO FORMATO : ( ESTO LO HIZO EL PROFE EN EL CURSO )
+  <h2>CURSOS EN LA BASE DE DATOS</h2>
+
+    <p>{{n.nombre}}</p>
+    <p>{{n.camada}}</p>
+
+    <table clas="table">
+      <thead>
+        <tr>
+          <th>id</th>
+          <th>nombre</th>
+          <th>camada</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for n in cursos %}
+        <tr>
+          <th scope="row">{{n.id}}</th>
+          <th>{{n.nombre}}</th>
+          <th>{{n.camada}}</th>
+        </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+
+    ------------------------------------------------------------------------
+    CONTENIDO DE CURSO :
+       <h2 class="mb-4"></h2>
+
+    <p><strong></strong> {{n.nombre}}</p>
+    <p><strong></strong> {{n.camada}}</p>
+
+    <table class="table table-striped table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Nombre</th>
+          <th scope="col">Camada</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for n in cursos %}
+        <tr>
+          <td>{{n.id}}</td>
+          <td>{{n.nombre}}</td>
+          <td>{{n.camada}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    -------------------------------------------------------
+    SUPER USUARIO :Franco,emailfalso@gmail.com, Andorra1, 
+-------------------------------------------------------------------------------------------------------
+forms.py
+from django import forms
+
+
+class Curso_formulario(forms.Form):
+    nombre = forms.CharField(max_length=30)
+    camada = forms.IntegerField()
+    ---------------------------------------------------------------------
+    views,py busar curso
+    
+
+def buscar_curso(request):
+    return render(request, "buscar_curso.html")
+
+
+def buscar(request):
+    if request.GET["nombre"]:
+        nombre =request.GET["nombre"]
+        cursos = Curso.objects.filter(nombre__incotains=nombre)
+        return render( request , "resultado_busqueda.html" , {"cursos": cursos})
+        
+    else:
+        return HttpResponse("ingrese el nombre del curso ")
+
+        -------------------------------------------
+        template curso :
+        {% extends "padre.html" %} {% load static %} {% block contenido %}
+<h1 clas="mb-5">CURSOS EN LA BASE DE DATOS</h1>
+<a class="btn btn-primary" href=" {% url 'formulario_curso' %}"
+  >CARGAR NUEVO CURSO</a
+>
+<!-- Botón para buscar cursos -->
+<a class="btn btn-secondary" href="{% url 'buscar_curso' %}">BUSCAR CURSOS</a>
+<h2 class="mb-4"></h2>
+
+<p><strong></strong> {{n.nombre}}</p>
+<p><strong></strong> {{n.camada}}</p>
+
+<table class="table table-striped table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Camada</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for n in cursos %}
+    <tr>
+      <td>{{n.id}}</td>
+      <td>{{n.nombre}}</td>
+      <td>{{n.camada}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock contenido %}

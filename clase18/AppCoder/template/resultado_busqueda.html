@@ -1,0 +1,23 @@
+{% extends "padre.html" %} {% load static %} {% block contenido%}
+<h1 class="mb-5">CURSOS EN LA BASE DE DATOS</h1>
+
+<!-- Botón para cargar un nuevo curso -->
+<a class="btn btn-primary" href="{% url 'formulario_curso' %}"
+  >Cargar Nuevo Curso</a
+>
+
+<!-- Botón para buscar cursos -->
+<a class="btn btn-secondary" href="{% url 'buscar_curso' %}">Buscar Cursos</a>
+
+{% if cursos%}
+<ul>
+  {% for curso in cursos %}
+  <li>Nombre: {{curso.nombre}}</li>
+  <li>Camada: {{curso.camada}}</li>
+
+  {% endfor %}
+</ul>
+{% else %}
+<p>No se encontro coincidencia</p>
+
+{% endif %} {% endblock %}

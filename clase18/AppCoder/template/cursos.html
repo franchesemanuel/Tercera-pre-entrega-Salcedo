@@ -1,0 +1,35 @@
+{% extends "padre.html" %} {% load static %} {% block contenido %}
+<h1 class="mb-5">CURSOS EN LA BASE DE DATOS</h1>
+
+<!-- Botón para cargar un nuevo curso -->
+<a class="btn btn-primary" href="{% url 'formulario_curso' %}"
+  >Cargar Nuevo Curso</a
+>
+
+<!-- Botón para buscar cursos -->
+<a class="btn btn-secondary" href="{% url 'buscar_curso' %}">Buscar Cursos</a>
+
+<h2 class="mb-4"></h2>
+
+<p><strong>Nombre:</strong> {{n.nombre}}</p>
+<p><strong>Camada:</strong> {{n.camada}}</p>
+
+<table class="table table-striped table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Nombre</th>
+      <th scope="col">Camada</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for n in cursos %}
+    <tr>
+      <td>{{n.id}}</td>
+      <td>{{n.nombre}}</td>
+      <td>{{n.camada}}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock contenido %}
